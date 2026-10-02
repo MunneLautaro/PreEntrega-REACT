@@ -1,0 +1,153 @@
+.header {
+  background: var(--fondo-oscuro);
+  border-bottom: 3px solid var(--acento-principal);
+  box-shadow: 0 6px 18px rgba(26, 25, 24, 0.18);
+  color: var(--texto-claro);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 76px;
+  padding: 0.85rem clamp(1rem, 5vw, 4rem);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--texto-claro);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.brandLogo {
+  width: 4.5rem;
+  height: 3rem;
+  border: 2px solid var(--acento-principal);
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 3px 3px 0 var(--color-secundario);
+}
+
+.brandName {
+  font-size: 1.15rem;
+}
+
+.nav {
+  display: flex;
+}
+
+.ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.75rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLink {
+  position: relative;
+  display: inline-block;
+  padding: 0.6rem 0;
+  color: rgba(248, 245, 238, 0.82);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.navLink::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.25rem;
+  left: 0;
+  height: 2px;
+  background: var(--acento-principal);
+  content: "";
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.navLink:hover,
+.navLink:focus-visible {
+  color: var(--texto-claro);
+}
+
+.navLink:hover::after,
+.navLink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.cartItem {
+  border-left: 1px solid rgba(248, 245, 238, 0.2);
+  padding-left: clamp(1rem, 3vw, 2rem);
+}
+
+.cartLink {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border: 1px solid rgba(248, 245, 238, 0.25);
+  border-radius: 10px;
+  background: rgba(234, 227, 210, 0.08);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cartLink:hover,
+.cartLink:focus-visible {
+  border-color: var(--acento-principal);
+  background: rgba(217, 130, 43, 0.18);
+}
+
+.cartIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.cartCount {
+  position: absolute;
+  top: -0.45rem;
+  right: -0.45rem;
+  min-width: 1.25rem;
+  padding: 0.15rem 0.3rem;
+  border: 2px solid var(--fondo-oscuro);
+  border-radius: 999px;
+  background-color: var(--color-secundario);
+  color: var(--texto-claro);
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (max-width: 560px) {
+  .header {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .brandName {
+    display: none;
+  }
+
+  .brandLogo {
+    width: 4rem;
+    height: 2.7rem;
+  }
+
+  .ul {
+    gap: 1rem;
+  }
+
+  .navLink {
+    font-size: 0.85rem;
+  }
+
+  .cartItem {
+    padding-left: 0.75rem;
+  }
+}

@@ -1,0 +1,136 @@
+.cart {
+  width: min(100% - 2rem, 860px);
+  margin: 2rem auto 3rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--fondo-principal);
+  color: var(--texto);
+}
+
+.heading {
+  margin-bottom: 1.5rem;
+  color: var(--fondo-oscuro);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: 0;
+}
+
+.items {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(100px, 1fr));
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  background: var(--detalle);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--acento-principal);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.productName {
+  color: var(--fondo-oscuro);
+  font-size: 1.05rem;
+}
+
+.detail {
+  margin: 0;
+  color: rgba(26, 25, 24, 0.72);
+  font-size: 0.9rem;
+}
+
+.subtotal {
+  margin: 0;
+  color: var(--color-secundario);
+  font-weight: 700;
+  text-align: right;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid var(--fondo-oscuro);
+}
+
+.totalLabel {
+  margin: 0;
+  color: var(--fondo-oscuro);
+  font-size: 1.15rem;
+}
+
+.total {
+  margin: 0;
+  color: var(--color-secundario);
+  font-size: 1.6rem;
+}
+
+.clearButton {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  background: var(--fondo-oscuro);
+  border: 1px solid var(--fondo-oscuro);
+  border-radius: 8px;
+  color: var(--texto-claro);
+  cursor: pointer;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.clearButton:hover {
+  background: var(--acento-principal);
+  border-color: var(--acento-principal);
+  color: var(--fondo-oscuro);
+  transform: translateY(-1px);
+}
+
+.empty {
+  width: min(100% - 2rem, 620px);
+  margin: 3rem auto;
+  padding: 3rem 1.5rem;
+  background: var(--detalle);
+  border: 1px solid var(--border);
+  border-top: 6px solid var(--color-secundario);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.emptyTitle {
+  margin-bottom: 0.5rem;
+  color: var(--fondo-oscuro);
+  font-size: 1.8rem;
+}
+
+.emptyText {
+  margin: 0;
+  color: rgba(26, 25, 24, 0.72);
+}
+
+@media (max-width: 680px) {
+  .cartItem {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .productName {
+    grid-column: 1 / -1;
+  }
+
+  .subtotal {
+    text-align: left;
+  }
+
+  .summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

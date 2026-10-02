@@ -1,0 +1,13 @@
+.footer {
+  border-top: 1px solid var(--border);
+  background: var(--fondo-principal);
+  color: var(--texto);
+}
+
+.copyright {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(26, 25, 24, 0.62);
+}

@@ -1,0 +1,103 @@
+.productForm {
+  width: min(100%, 720px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid rgba(248, 245, 238, 0.1);
+  border-radius: 8px;
+  background: var(--fondo-oscuro);
+  box-shadow:
+    12px 14px 0 rgba(184, 58, 36, 0.16),
+    var(--shadow);
+}
+
+.label {
+  margin-top: 8px;
+  color: var(--detalle);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(234, 227, 210, 0.26);
+  border-radius: 4px;
+  background: rgba(248, 245, 238, 0.07);
+  color: var(--texto-claro);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgba(248, 245, 238, 0.46);
+}
+
+.input:focus {
+  border-color: var(--acento-principal);
+  background: rgba(248, 245, 238, 0.12);
+  box-shadow: 0 0 0 3px rgba(217, 130, 43, 0.2);
+}
+
+.input[type="file"] {
+  padding: 8px;
+  color: rgba(248, 245, 238, 0.7);
+  cursor: pointer;
+}
+
+.input[type="file"]::file-selector-button {
+  margin-right: 10px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--detalle);
+  color: var(--fondo-oscuro);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 4px;
+  background: var(--acento-principal);
+  color: var(--fondo-oscuro);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button:hover {
+  background: #e49a4d;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 560px) {
+  .productForm {
+    grid-template-columns: 1fr;
+    box-shadow:
+      7px 8px 0 rgba(184, 58, 36, 0.16),
+      var(--shadow);
+  }
+
+  .button {
+    grid-column: auto;
+  }
+}

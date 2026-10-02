@@ -1,0 +1,39 @@
+.employeeListContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 24px 40px;
+  background: var(--fondo-principal);
+  color: var(--texto);
+}
+
+.employeeListContainer h2 {
+  color: var(--fondo-oscuro);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.employeeListContainer h2::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 4px;
+  margin: 14px auto 0;
+  border-radius: 999px;
+  background: var(--acento-principal);
+}
+
+.employeeListContainer > p {
+  color: rgba(26, 25, 24, 0.68);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .employeeListContainer {
+    padding: 28px 16px 32px;
+  }
+}

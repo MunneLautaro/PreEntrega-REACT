@@ -1,0 +1,61 @@
+.app {
+  min-height: 100vh;
+  background: var(--fondo-principal);
+  color: var(--texto);
+}
+
+.section {
+  padding: 24px;
+}
+
+.card {
+  background: var(--detalle);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.button-primary {
+  background: var(--acento-principal);
+  color: var(--texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.button-primary:hover {
+  filter: brightness(0.96);
+}
+
+.button-secondary {
+  background: var(--color-secundario);
+  color: var(--texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.button-secondary:hover {
+  filter: brightness(0.96);
+}
+
+.text-dark {
+  color: var(--fondo-oscuro);
+}
+
+.text-light {
+  color: var(--texto-claro);
+}
+
+.bg-dark {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+.bg-card {
+  background: var(--detalle);
+}
