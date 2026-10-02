@@ -1,6 +1,7 @@
 import { useState } from "react"
 import ProductForm from "../ProductForm/ProductForm"
 import styles from "./ProductFormContainer.module.css"
+import { toast } from "react-toastify"
 
 function ProductFormContainer() {
   const [data, setData] = useState({
@@ -21,8 +22,26 @@ function ProductFormContainer() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    const price = Number(data.price)
+    const stock = Number(data.stock)
+
+    if (!data.name.trim()) {
+      toast.warn("Por favor, ingresa un nombre para el producto.")
+      return
+    }
+
+    if (data.price === "" || !Number.isFinite(price) || price < 0) {
+      toast.warn("El precio debe ser un número mayor o igual a 0.")
+      return
+    }
+
+    if (data.stock === "" || !Number.isInteger(stock) || stock < 0) {
+      toast.warn("El stock debe ser un número entero mayor o igual a 0.")
+      return
+    }
+
     if (!image) {
-      alert("Por favor, selecciona una imagen para el producto.")
+      toast.warn("Por favor, selecciona una imagen para el producto.")
       return
     }
     const apiKey = import.meta.env.VITE_IMGBB_API_KEY
@@ -45,16 +64,23 @@ function ProductFormContainer() {
           ...data,
           urlImagen: datosImgbb.data.url,
         }
-        console.log(
-          "Enviando los siguientes datos COMPLETOS a la API:",
-          productoCompleto,
+        toast.success(
+          `El producto ${productoCompleto.name} fue agregado con éxito.`,
         )
       } else {
         throw new Error("La subida de la imagen a Imgbb falló.")
       }
     } catch (error) {
-      console.error("Error en el proceso de envío:", error)
-      alert("Hubo un error al subir la imagen. Por favor, intentá de nuevo.")
+      toast.error(
+        "Hubo un error al subir la imagen. Por favor, intentá de nuevo.",
+      )
+    } finally {
+      setData({
+        name: "",
+        price: "",
+        stock: "",
+      })
+      setImage(null)
     }
   }
 

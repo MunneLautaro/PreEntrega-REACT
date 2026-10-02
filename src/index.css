@@ -20,6 +20,30 @@
   -moz-osx-font-smoothing: grayscale;
   color-scheme: light;
 }
+npm .toast-container {
+  --toastify-color-dark: var(--fondo-oscuro);
+  --toastify-color-success: var(--acento-principal);
+  --toastify-color-warning: var(--acento-principal);
+  --toastify-color-error: var(--color-secundario);
+  --toastify-text-color-dark: var(--texto-claro);
+  --toastify-font-family: inherit;
+}
+
+.toast-container .Toastify__toast {
+  border: 1px solid rgba(234, 227, 210, 0.2);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+}
+
+.toast-container .Toastify__toast--success,
+.toast-container .Toastify__toast--warning,
+.toast-container .Toastify__toast--error {
+  color: var(--texto-claro);
+}
+
+.toast-container .Toastify__progress-bar {
+  background: var(--detalle);
+}
 
 * {
   box-sizing: border-box;

@@ -2,6 +2,7 @@ import styles from "./ProductCard.module.css"
 import { useState } from "react"
 import { useCart } from "../../../hooks/useCart"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 
 export default function ProductCard({ product }) {
   const [isFavorite, setIsFavorite] = useState(false)
@@ -23,7 +24,7 @@ export default function ProductCard({ product }) {
     if (count > 0) {
       addToCart(product, count)
       setCount(0)
-      alert(`You added ${count} ${product.name} to your cart`)
+      toast.success(`Agregaste ${count} ${product.name} a tu carrito.`)
     }
   }
 
