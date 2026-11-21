@@ -1,16 +1,68 @@
-# React + Vite
+# PreEntrega React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Monorepo con dos proyectos independientes, cada uno con su propio `package.json`, para poder deployarlos por separado.
 
-Currently, two official plugins are available:
+```
+frontend/   React + Vite
+backend/    API REST con Express + Mongoose + Yup
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Backend
 
-## React Compiler
+```bash
+cd backend
+cp .env.example .env   # completar MONGODB_URI y CORS_ORIGIN
+npm install
+npm run seed           # opcional: carga productos y equipo (o `npm run seed -- equipo`)
+npm run dev            # http://localhost:3000/api
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Estructura por capas:
 
-## Expanding the ESLint configuration
+```
+src/
+  config/        env, conexión a MongoDB, opciones de CORS
+  models/        schemas de Mongoose
+  validations/   schemas de Yup (body de las peticiones)
+  services/      lógica de negocio y acceso a datos
+  controllers/   reciben req/res y llaman a los services
+  routes/        endpoints + middlewares de cada ruta
+  middlewares/   validate (Yup), validateObjectId, notFound, errorHandler
+  utils/         HttpError
+  app.js         configuración de Express
+  index.js       conexión a la DB y arranque del servidor
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Endpoints (`/api`):
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/health` | Estado del servidor y de la DB |
+| GET | `/products` | Listar productos (opcional: `?category=Vientos`) |
+| GET | `/products/categories` | Categorías que tienen productos |
+| GET | `/products/:id` | Obtener un producto |
+| POST | `/products` | Crear producto |
+| PUT | `/products/:id` | Reemplazar producto (todos los campos) |
+| PATCH | `/products/:id` | Actualizar campos de un producto |
+| DELETE | `/products/:id` | Eliminar producto |
+| * | `/team[/:id]` | Mismas operaciones para la colección `equipo` (footer) |
+
+Respuestas: `{ ok: true, data }` si sale bien, `{ ok: false, message, details? }` si hay error.
+
+Producto: `name`, `category`, `price`, `stock`, `image` y `description` (opcional). Las categorías válidas están en [`backend/src/constants/categories.js`](backend/src/constants/categories.js).
+
+Para probar la API hay una colección de Postman en [`backend/postman/`](backend/postman/).
+
+## Frontend
+
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev            # http://localhost:5173
+```
+
+## Deploy
+
+- **Backend** (Render, Railway, etc.): root directory `backend`, build `npm install`, start `npm start`. Variables: `MONGODB_URI`, `CORS_ORIGIN` (URL del frontend deployado), `NODE_ENV=production`.
+- **Frontend** (Vercel, Netlify, etc.): root directory `frontend`, build `npm run build`, output `dist`. Variables: `VITE_API_URL`, `VITE_IMGBB_API_KEY`.

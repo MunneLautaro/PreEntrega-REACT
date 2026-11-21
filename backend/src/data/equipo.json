@@ -1,0 +1,20 @@
+[
+  {
+    "nombre": "Valentina Ríos",
+    "rol": "Desarrolladora Frontend",
+    "linkedinURL": "https://www.linkedin.com/",
+    "fotoURL": "https://api.dicebear.com/9.x/avataaars/svg?seed=Valentina&eyes=default,happy&mouth=smile,default&eyebrows=default,defaultNatural&clothing=blazerAndShirt,blazerAndSweater,collarAndSweater&backgroundColor=eae3d2&facialHairProbability=0"
+  },
+  {
+    "nombre": "Martín Acosta",
+    "rol": "Desarrollador Backend",
+    "linkedinURL": "https://www.linkedin.com/",
+    "fotoURL": "https://api.dicebear.com/9.x/avataaars/svg?seed=Martin&eyes=default,happy&mouth=smile,default&eyebrows=default,defaultNatural&clothing=blazerAndShirt,blazerAndSweater,collarAndSweater&backgroundColor=eae3d2"
+  },
+  {
+    "nombre": "Camila Duarte",
+    "rol": "Diseñadora UX/UI",
+    "linkedinURL": "https://www.linkedin.com/",
+    "fotoURL": "https://api.dicebear.com/9.x/avataaars/svg?seed=Camila&eyes=default,happy&mouth=smile,default&eyebrows=default,defaultNatural&clothing=blazerAndShirt,blazerAndSweater,collarAndSweater&backgroundColor=eae3d2&facialHairProbability=0"
+  }
+]

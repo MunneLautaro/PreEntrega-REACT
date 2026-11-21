@@ -1,0 +1,72 @@
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0 24px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--detalle);
+  color: var(--fondo-oscuro);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--acento-principal);
+  transform: translateY(-1px);
+}
+
+.count {
+  display: grid;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 6px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(26, 25, 24, 0.1);
+  font-size: 0.75rem;
+}
+
+.active {
+  border-color: var(--fondo-oscuro);
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+.active .count {
+  background: var(--acento-principal);
+  color: var(--fondo-oscuro);
+}
+
+@media (max-width: 560px) {
+  /* En celulares los botones quedan en una fila con scroll horizontal */
+  .filter {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 16px 6px;
+    scrollbar-width: none;
+  }
+
+  .chip {
+    flex: 0 0 auto;
+  }
+}

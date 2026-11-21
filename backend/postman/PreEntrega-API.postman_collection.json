@@ -1,0 +1,726 @@
+{
+  "info": {
+    "name": "PreEntrega API",
+    "description": "Colección para probar el backend (Express + Mongoose + Yup).\n\nUso:\n1. Levantá el backend con `npm run dev` dentro de /backend.\n2. Si deployaste, cambiá la variable `baseUrl` de la colección.\n3. Corré la colección completa con el Runner: los requests de creación guardan `productId` y `teamMemberId` para los siguientes.\n\nAviso: correrla crea y borra datos de prueba en la base configurada en MONGODB_URI.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "productId",
+      "value": ""
+    },
+    {
+      "key": "teamMemberId",
+      "value": ""
+    },
+    {
+      "key": "fakeId",
+      "value": "000000000000000000000000"
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('Responde en menos de 5s', () => pm.expect(pm.response.responseTime).to.be.below(5000));",
+          "if (pm.response.code !== 204) {",
+          "  pm.test('Responde JSON con campo ok', () => pm.expect(pm.response.json()).to.have.property('ok'));",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health",
+        "description": "Estado del servidor y de la conexión a MongoDB."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('DB conectada', () => pm.expect(pm.response.json().db).to.eql('connected'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('data es un array', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar categorías",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/categories",
+            "description": "Categorías que tienen al menos un producto cargado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"data es un array de strings\", () => pm.expect(pm.response.json().data).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Filtrar productos por categoría",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?category=Vientos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Vientos"
+                }
+              ]
+            },
+            "description": "Equivalente a un where(\"category\", \"==\", \"Vientos\") de Firestore."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Todos son de la categoría pedida\", () => pm.response.json().data.forEach((p) => pm.expect(p.category).to.eql(\"Vientos\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bajo eléctrico Fender Jazz Bass\",\n  \"category\": \"Cuerdas\",\n  \"price\": 899.99,\n  \"stock\": 4,\n  \"image\": \"https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80\",\n  \"description\": \"Producto creado desde Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "var { data } = pm.response.json();",
+                  "pm.test('Devuelve id', () => pm.expect(data.id).to.be.a('string'));",
+                  "pm.test('No expone _id ni __v', () => { pm.expect(data).to.not.have.property('_id'); pm.expect(data).to.not.have.property('__v'); });",
+                  "pm.collectionVariables.set('productId', data.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener producto por id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/{{productId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Es el producto creado', () => pm.expect(pm.response.json().data.id).to.eql(pm.collectionVariables.get('productId')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar producto (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": 10,\n  \"price\": \"799.99\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Actualiza solo los campos enviados. El precio como string se convierte a número."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "var { data } = pm.response.json();",
+                  "pm.test('Stock actualizado', () => pm.expect(data.stock).to.eql(10));",
+                  "pm.test('Precio convertido a número', () => pm.expect(data.price).to.eql(799.99));",
+                  "pm.test('Nombre sin cambios', () => pm.expect(data.name).to.eql('Bajo eléctrico Fender Jazz Bass'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reemplazar producto (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bajo eléctrico Fender Precision\",\n  \"category\": \"Cuerdas\",\n  \"price\": 950,\n  \"stock\": 2,\n  \"image\": \"https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80\",\n  \"description\": \"Reemplazado desde Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "PUT exige todos los campos obligatorios."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Nombre reemplazado', () => pm.expect(pm.response.json().data.name).to.eql('Bajo eléctrico Fender Precision'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar producto",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/products/{{productId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener producto eliminado (404)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/{{productId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));",
+                  "pm.test('ok es false', () => pm.expect(pm.response.json().ok).to.be.false);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Equipo",
+      "description": "Colección \"equipo\" de MongoDB (integrantes que se muestran en el footer).",
+      "item": [
+        {
+          "name": "Listar equipo",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/team"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"data es un array\", () => pm.expect(pm.response.json().data).to.be.an(\"array\"));",
+                  "pm.test(\"Cada integrante tiene los 4 campos\", () => pm.response.json().data.forEach((m) => pm.expect(m).to.include.all.keys(\"nombre\", \"rol\", \"linkedinURL\", \"fotoURL\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear integrante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/team",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Lucía Fernández\",\n  \"rol\": \"QA Tester\",\n  \"linkedinURL\": \"https://www.linkedin.com/\",\n  \"fotoURL\": \"https://api.dicebear.com/9.x/avataaars/svg?seed=Lucia\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "var { data } = pm.response.json();",
+                  "pm.test(\"Devuelve id\", () => pm.expect(data.id).to.be.a(\"string\"));",
+                  "pm.collectionVariables.set(\"teamMemberId\", data.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Obtener integrante por id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/team/{{teamMemberId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Es el integrante creado\", () => pm.expect(pm.response.json().data.id).to.eql(pm.collectionVariables.get(\"teamMemberId\")));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar integrante (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/team/{{teamMemberId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rol\": \"QA Lead\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Rol actualizado\", () => pm.expect(pm.response.json().data.rol).to.eql(\"QA Lead\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear integrante con LinkedIn inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/team",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sin Link\",\n  \"rol\": \"Tester\",\n  \"linkedinURL\": \"https://example.com/perfil\",\n  \"fotoURL\": \"no-es-url\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Informa linkedinURL y fotoURL\", () => pm.expect(pm.response.json().details.map((d) => d.field)).to.include.members([\"linkedinURL\", \"fotoURL\"]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar integrante",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/team/{{teamMemberId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Errores y validaciones",
+      "item": [
+        {
+          "name": "Crear producto inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"x\",\n  \"price\": -10,\n  \"stock\": 1.5,\n  \"image\": \"no-es-una-url\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Yup devuelve todos los errores juntos en `details`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));",
+                  "var fields = pm.response.json().details.map(d => d.field);",
+                  "pm.test('Informa los 5 campos inválidos', () => pm.expect(fields).to.include.members(['name', 'category', 'price', 'stock', 'image']));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear producto con categoría inválida (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Theremin\",\n  \"category\": \"Electrónica rara\",\n  \"price\": 100,\n  \"stock\": 1,\n  \"image\": \"https://example.com/t.png\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"El error es en category\", () => pm.expect(pm.response.json().details.map((d) => d.field)).to.include(\"category\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear producto sin body (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH sin campos (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{fakeId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "JSON mal formado (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Guitarra\", ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Mensaje de JSON inválido', () => pm.expect(pm.response.json().message).to.eql('El body no es un JSON válido'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Id con formato inválido (400)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/123"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Producto inexistente (404)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/{{fakeId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ruta inexistente (404)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/no-existe"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Origen bloqueado por CORS (403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://sitio-no-permitido.com"
+              }
+            ],
+            "url": "{{baseUrl}}/health",
+            "description": "Simula un pedido desde un frontend que no está en CORS_ORIGIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

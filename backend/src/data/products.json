@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Guitarra criolla Yamaha C40",
+    "category": "Cuerdas",
+    "price": 249.99,
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=600&q=80",
+    "description": "Guitarra clásica de madera con cuerdas de nylon, ideal para comenzar a estudiar música."
+  },
+  {
+    "name": "Teclado Casio CT-S200",
+    "category": "Teclados",
+    "price": 189.99,
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80",
+    "description": "Teclado portátil de 61 teclas con sonidos integrados para practicar, crear y tocar en vivo."
+  },
+  {
+    "name": "Batería electrónica Alesis Nitro Mesh",
+    "category": "Percusión",
+    "price": 579.99,
+    "stock": 3,
+    "image": "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=600&q=80",
+    "description": "Set de batería electrónica con parches de malla y módulo con kits listos para tocar."
+  },
+  {
+    "name": "Micrófono dinámico Shure SM58",
+    "category": "Audio",
+    "price": 129.99,
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=600&q=80",
+    "description": "Micrófono vocal resistente, pensado para ensayos, escenarios y grabaciones."
+  },
+  {
+    "name": "Ukelele soprano Kala Makala",
+    "category": "Cuerdas",
+    "price": 79.99,
+    "stock": 7,
+    "image": "https://images.unsplash.com/photo-1556449895-a33c9dba33dd?auto=format&fit=crop&w=600&q=80",
+    "description": "Ukelele soprano liviano con sonido cálido, perfecto para aprender y llevar a cualquier lugar."
+  },
+  {
+    "name": "Auriculares de estudio Audio-Technica M20x",
+    "category": "Audio",
+    "price": 69.99,
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+    "description": "Auriculares cerrados de monitoreo para escuchar mezclas, clases y práctica con detalle."
+  },
+  {
+    "name": "Pedal de distorsión Boss DS-1",
+    "category": "Accesorios",
+    "price": 89.99,
+    "stock": 4,
+    "image": "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?auto=format&fit=crop&w=600&q=80",
+    "description": "Pedal clásico de distorsión para guitarra eléctrica con controles de tono, nivel y distorsión."
+  },
+  {
+    "name": "Atril plegable para partituras",
+    "category": "Accesorios",
+    "price": 34.99,
+    "stock": 15,
+    "image": "https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=600&q=80",
+    "description": "Atril metálico regulable y plegable para estudiar o tocar con las partituras a la altura correcta."
+  },
+  {
+    "name": "Cajón peruano Meinl Headliner",
+    "category": "Percusión",
+    "price": 119.99,
+    "stock": 6,
+    "image": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=600&q=80",
+    "description": "Cajón acústico con graves definidos y agudos expresivos para música popular y percusión."
+  },
+  {
+    "name": "Interfaz de audio Focusrite Scarlett Solo",
+    "category": "Audio",
+    "price": 169.99,
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=600&q=80",
+    "description": "Interfaz USB compacta con entrada de micrófono e instrumento para grabar en casa."
+  },
+  {
+    "name": "Cuerdas para guitarra eléctrica Ernie Ball",
+    "category": "Accesorios",
+    "price": 12.99,
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=600&q=80",
+    "description": "Juego de cuerdas nickel wound calibre 10-46 para un sonido equilibrado y cómodo."
+  },
+  {
+    "name": "Armónica diatónica Hohner Marine Band",
+    "category": "Vientos",
+    "price": 39.99,
+    "stock": 9,
+    "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80",
+    "description": "Armónica diatónica en Do, versátil para blues, folk, rock y primeras melodías."
+  },
+  {
+    "name": "Guitarra acústica Fender CD-60S",
+    "category": "Cuerdas",
+    "price": 299.99,
+    "stock": 6,
+    "image": "https://images.unsplash.com/photo-1558098329-a11cff621064?auto=format&fit=crop&w=600&q=80",
+    "description": "Guitarra folk de tapa de abeto con cuerdas de acero, cómoda para acompañar y componer."
+  },
+  {
+    "name": "Guitarra eléctrica Fender Telecaster Player",
+    "category": "Cuerdas",
+    "price": 899.99,
+    "stock": 3,
+    "image": "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?auto=format&fit=crop&w=600&q=80",
+    "description": "Clásica Telecaster con dos pastillas single coil y un sonido brillante y definido."
+  },
+  {
+    "name": "Guitarra eléctrica Epiphone Les Paul Standard",
+    "category": "Cuerdas",
+    "price": 649.99,
+    "stock": 4,
+    "image": "https://images.unsplash.com/photo-1519508234439-4f23643125c1?auto=format&fit=crop&w=600&q=80",
+    "description": "Cuerpo de caoba y pastillas humbucker para un sonido grueso, ideal para rock."
+  },
+  {
+    "name": "Violín Stentor Student II 4/4",
+    "category": "Cuerdas",
+    "price": 219.99,
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1612225330812-01a9c6b355ec?auto=format&fit=crop&w=600&q=80",
+    "description": "Violín de estudio de madera maciza, incluye arco, estuche y resina."
+  },
+  {
+    "name": "Piano digital Yamaha Arius YDP-145",
+    "category": "Teclados",
+    "price": 1149.99,
+    "stock": 2,
+    "image": "https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&w=600&q=80",
+    "description": "88 teclas con acción contrapesada y sonido de piano de cola en formato mueble."
+  },
+  {
+    "name": "Controlador MIDI M-Audio Oxygen Pro Mini",
+    "category": "Teclados",
+    "price": 139.99,
+    "stock": 7,
+    "image": "https://images.unsplash.com/photo-1525362081669-2b476bb628c3?auto=format&fit=crop&w=600&q=80",
+    "description": "32 teclas sensibles, 8 pads retroiluminados y controles para producir en tu DAW."
+  },
+  {
+    "name": "Trompeta Bach TR300H2",
+    "category": "Vientos",
+    "price": 699.99,
+    "stock": 3,
+    "image": "https://images.unsplash.com/photo-1573871669414-010dbf73ca84?auto=format&fit=crop&w=600&q=80",
+    "description": "Trompeta en Si bemol lacada, con buena afinación y respuesta para estudiantes."
+  },
+  {
+    "name": "Saxofón alto Yamaha YAS-280",
+    "category": "Vientos",
+    "price": 1299.99,
+    "stock": 2,
+    "image": "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?auto=format&fit=crop&w=600&q=80",
+    "description": "Saxo alto liviano y fácil de tocar, pensado para dar los primeros pasos con buen sonido."
+  },
+  {
+    "name": "Batería acústica Pearl Roadshow 5 cuerpos",
+    "category": "Percusión",
+    "price": 749.99,
+    "stock": 2,
+    "image": "https://images.unsplash.com/photo-1543443258-92b04ad5ec6b?auto=format&fit=crop&w=600&q=80",
+    "description": "Set completo con platillos, fierros y banqueta, listo para armar y tocar."
+  },
+  {
+    "name": "Palillos Promark 5A Hickory",
+    "category": "Accesorios",
+    "price": 14.99,
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1571327073757-71d13c24de30?auto=format&fit=crop&w=600&q=80",
+    "description": "Par de palillos de nogal americano con punta de madera, el tamaño más versátil."
+  },
+  {
+    "name": "Micrófono condensador Rode NT1",
+    "category": "Audio",
+    "price": 259.99,
+    "stock": 4,
+    "image": "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?auto=format&fit=crop&w=600&q=80",
+    "description": "Micrófono de estudio de muy bajo ruido para grabar voces e instrumentos acústicos."
+  }
+]
