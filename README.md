@@ -13,8 +13,8 @@ backend/    API REST con Express + Mongoose + Yup
 cd backend
 cp .env.example .env   # completar MONGODB_URI y CORS_ORIGIN
 npm install
-npm run seed           # opcional: carga productos y equipo (o `npm run seed -- equipo`)
-npm run dev            # http://localhost:3000/api
+npm run seed
+npm run dev
 ```
 
 Estructura por capas:
@@ -35,17 +35,17 @@ src/
 
 Endpoints (`/api`):
 
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| GET | `/health` | Estado del servidor y de la DB |
-| GET | `/products` | Listar productos (opcional: `?category=Vientos`) |
-| GET | `/products/categories` | Categorías que tienen productos |
-| GET | `/products/:id` | Obtener un producto |
-| POST | `/products` | Crear producto |
-| PUT | `/products/:id` | Reemplazar producto (todos los campos) |
-| PATCH | `/products/:id` | Actualizar campos de un producto |
-| DELETE | `/products/:id` | Eliminar producto |
-| * | `/team[/:id]` | Mismas operaciones para la colección `equipo` (footer) |
+| Método | Ruta                   | Descripción                                            |
+| ------ | ---------------------- | ------------------------------------------------------ |
+| GET    | `/health`              | Estado del servidor y de la DB                         |
+| GET    | `/products`            | Listar productos (opcional: `?category=Vientos`)       |
+| GET    | `/products/categories` | Categorías que tienen productos                        |
+| GET    | `/products/:id`        | Obtener un producto                                    |
+| POST   | `/products`            | Crear producto                                         |
+| PUT    | `/products/:id`        | Reemplazar producto (todos los campos)                 |
+| PATCH  | `/products/:id`        | Actualizar campos de un producto                       |
+| DELETE | `/products/:id`        | Eliminar producto                                      |
+| \*     | `/team[/:id]`          | Mismas operaciones para la colección `equipo` (footer) |
 
 Respuestas: `{ ok: true, data }` si sale bien, `{ ok: false, message, details? }` si hay error.
 
