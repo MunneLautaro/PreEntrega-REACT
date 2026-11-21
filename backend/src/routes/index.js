@@ -1,11 +1,11 @@
 import { Router } from "express"
 import mongoose from "mongoose"
+import couponRoutes from "./coupon.routes.js"
 import productRoutes from "./product.routes.js"
 import teamMemberRoutes from "./teamMember.routes.js"
 
 const router = Router()
 
-// Útil para el health check del servicio de deploy
 router.get("/health", (_req, res) => {
   res.json({
     ok: true,
@@ -16,5 +16,6 @@ router.get("/health", (_req, res) => {
 
 router.use("/products", productRoutes)
 router.use("/team", teamMemberRoutes)
+router.use("/coupons", couponRoutes)
 
 export default router

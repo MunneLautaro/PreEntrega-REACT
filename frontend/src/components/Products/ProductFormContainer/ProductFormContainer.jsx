@@ -2,8 +2,10 @@ import { useState } from "react"
 import ProductForm from "../ProductForm/ProductForm"
 import styles from "./ProductFormContainer.module.css"
 import { toast } from "react-toastify"
+import { useConfirm } from "../../../hooks/useConfirm"
 
 function ProductFormContainer() {
+  const { confirm } = useConfirm()
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -44,6 +46,19 @@ function ProductFormContainer() {
       toast.warn("Por favor, selecciona una imagen para el producto.")
       return
     }
+
+    const confirmacion = await confirm({
+      title: "¿Agregar este producto?",
+      message: (
+        <p>
+          Se va a dar de alta <strong>{data.name.trim()}</strong> a $
+          {price.toFixed(2)} con {stock} {stock === 1 ? "unidad" : "unidades"}{" "}
+          en stock.
+        </p>
+      ),
+      confirmText: "Agregar producto",
+    })
+    if (!confirmacion) return
     const apiKey = import.meta.env.VITE_IMGBB_API_KEY
     const formData = new FormData()
     formData.append("image", image)
@@ -71,6 +86,7 @@ function ProductFormContainer() {
         throw new Error("La subida de la imagen a Imgbb falló.")
       }
     } catch (error) {
+      console.error("Error al subir la imagen:", error)
       toast.error(
         "Hubo un error al subir la imagen. Por favor, intentá de nuevo.",
       )

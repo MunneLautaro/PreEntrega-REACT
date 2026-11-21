@@ -28,6 +28,11 @@ export default function Header() {
               Alta de Productos
             </Link>
           </li>
+          <li className={styles.li}>
+            <Link className={styles.navLink} to="/admin/cupones">
+              Cupones
+            </Link>
+          </li>
           <li className={styles.cartItem}>
             <Link
               className={styles.cartLink}

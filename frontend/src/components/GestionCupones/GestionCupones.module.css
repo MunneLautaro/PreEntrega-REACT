@@ -1,0 +1,231 @@
+.section {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: clamp(28px, 7vw, 72px) 24px;
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(217, 130, 43, 0.13),
+      transparent 28%
+    ),
+    var(--fondo-principal);
+}
+
+.header {
+  width: min(100%, 720px);
+  text-align: left;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--color-secundario);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.header h2 {
+  color: var(--fondo-oscuro);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+}
+
+.description {
+  margin-top: 10px;
+  color: rgba(26, 25, 24, 0.68);
+}
+
+/* Formulario: mismo estilo que el de alta de productos */
+.form {
+  width: min(100%, 720px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid rgba(248, 245, 238, 0.1);
+  border-radius: 8px;
+  background: var(--fondo-oscuro);
+  box-shadow:
+    12px 14px 0 rgba(184, 58, 36, 0.16),
+    var(--shadow);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  margin-top: 8px;
+  color: var(--detalle);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(234, 227, 210, 0.26);
+  border-radius: 4px;
+  background: rgba(248, 245, 238, 0.07);
+  color: var(--texto-claro);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inputCodigo {
+  text-transform: uppercase;
+}
+
+.input::placeholder {
+  color: rgba(248, 245, 238, 0.46);
+  text-transform: none;
+}
+
+.input:focus {
+  border-color: var(--acento-principal);
+  background: rgba(248, 245, 238, 0.12);
+  box-shadow: 0 0 0 3px rgba(217, 130, 43, 0.2);
+}
+
+.button {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 4px;
+  background: var(--acento-principal);
+  color: var(--fondo-oscuro);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+  background: #e49a4d;
+  transform: translateY(-2px);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Lista de cupones */
+.listWrapper {
+  width: min(100%, 720px);
+  margin-top: 18px;
+}
+
+.listTitle {
+  margin-bottom: 12px;
+  color: var(--fondo-oscuro);
+  font-size: 1.3rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--acento-principal);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.codigo {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.porcentaje {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(217, 130, 43, 0.16);
+  color: var(--color-secundario);
+  font-size: 0.85rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.deleteButton {
+  padding: 8px 14px;
+  border: 1px solid var(--color-secundario);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-secundario);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: var(--color-secundario);
+  color: var(--texto-claro);
+}
+
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.statusMessage {
+  padding: 18px 0;
+  color: rgba(26, 25, 24, 0.68);
+}
+
+.error {
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .form {
+    grid-template-columns: 1fr;
+    box-shadow:
+      7px 8px 0 rgba(184, 58, 36, 0.16),
+      var(--shadow);
+  }
+
+  .item {
+    flex-wrap: wrap;
+  }
+
+  .codigo {
+    flex-basis: 100%;
+  }
+}

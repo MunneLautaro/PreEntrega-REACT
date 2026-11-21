@@ -1,8 +1,21 @@
 import { useCart } from "../../hooks/useCart"
+import { useConfirm } from "../../hooks/useConfirm"
 import styles from "./Cart.module.css"
 
 const Cart = () => {
   const { cart, clearCart, getCartTotal } = useCart()
+  const { confirm } = useConfirm()
+
+  const handleClearCart = async () => {
+    const confirmacion = await confirm({
+      title: "¿Vaciar el carrito?",
+      message: "Se van a quitar todos los productos del carrito.",
+      confirmText: "Vaciar carrito",
+      variant: "danger",
+    })
+    if (confirmacion) clearCart()
+  }
+
   if (cart.length === 0) {
     return (
       <div className={styles.empty}>
@@ -32,7 +45,7 @@ const Cart = () => {
         <h3 className={styles.totalLabel}>Total a pagar</h3>
         <p className={styles.total}>${getCartTotal()}</p>
       </div>
-      <button className={styles.clearButton} onClick={clearCart}>
+      <button className={styles.clearButton} onClick={handleClearCart}>
         Vaciar Carrito
       </button>
     </div>

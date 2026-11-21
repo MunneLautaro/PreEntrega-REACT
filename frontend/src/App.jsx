@@ -4,6 +4,7 @@ import ProductListContainer from "./components/Products/ProductListContainer/Pro
 import ProductFormContainer from "./components/Products/ProductFormContainer/ProductFormContainer"
 import ProductDetail from "./components/Products/ProductDetail/ProductDetail"
 import Cart from "./components/Cart/Cart"
+import GestionCupones from "./components/GestionCupones/GestionCupones"
 import { Routes, Route } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -27,6 +28,7 @@ function App() {
           <Route path="/addProduct" element={<ProductFormContainer />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/admin/cupones" element={<GestionCupones />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Route>
       </Routes>

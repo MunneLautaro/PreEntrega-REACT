@@ -46,6 +46,9 @@ Endpoints (`/api`):
 | PATCH  | `/products/:id`        | Actualizar campos de un producto                       |
 | DELETE | `/products/:id`        | Eliminar producto                                      |
 | \*     | `/team[/:id]`          | Mismas operaciones para la colección `equipo` (footer) |
+| GET    | `/coupons`             | Listar cupones de descuento (colección `cupones`)      |
+| POST   | `/coupons`             | Crear cupón (`codigo`, `porcentaje` 1-100)             |
+| DELETE | `/coupons/:id`         | Eliminar cupón                                         |
 
 Respuestas: `{ ok: true, data }` si sale bien, `{ ok: false, message, details? }` si hay error.
 

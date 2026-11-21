@@ -1,0 +1,132 @@
+.dialog {
+  width: min(calc(100% - 32px), 440px);
+  max-width: none;
+  padding: 0;
+  border: 1px solid rgba(248, 245, 238, 0.1);
+  border-top: 4px solid var(--acento-principal);
+  border-radius: 8px;
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  box-shadow:
+    10px 12px 0 rgba(184, 58, 36, 0.22),
+    0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.dialog[open] {
+  animation: aparecer 0.18s ease-out;
+}
+
+.dialog::backdrop {
+  background: rgba(26, 25, 24, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(22px, 5vw, 30px);
+}
+
+.title {
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.message {
+  color: rgba(248, 245, 238, 0.75);
+  overflow-wrap: anywhere;
+}
+
+.message strong {
+  color: var(--detalle);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancelButton,
+.confirmButton {
+  padding: 11px 18px;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.cancelButton {
+  border: 1px solid rgba(234, 227, 210, 0.3);
+  background: transparent;
+  color: var(--detalle);
+}
+
+.cancelButton:hover {
+  border-color: var(--detalle);
+  background: rgba(234, 227, 210, 0.08);
+}
+
+.confirmButton {
+  border: 1px solid var(--acento-principal);
+  background: var(--acento-principal);
+  color: var(--fondo-oscuro);
+}
+
+.confirmButton:hover {
+  border-color: #e49a4d;
+  background: #e49a4d;
+}
+
+.confirmButton.danger {
+  border-color: var(--color-secundario);
+  background: var(--color-secundario);
+  color: var(--texto-claro);
+}
+
+.confirmButton.danger:hover {
+  border-color: #cf4a32;
+  background: #cf4a32;
+}
+
+.cancelButton:focus-visible,
+.confirmButton:focus-visible {
+  outline: 2px solid var(--acento-principal);
+  outline-offset: 2px;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] {
+    animation: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancelButton,
+  .confirmButton {
+    width: 100%;
+  }
+}
