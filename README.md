@@ -39,7 +39,7 @@ Endpoints (`/api`):
 | ------ | ---------------------- | ------------------------------------------------------ |
 | GET    | `/health`              | Estado del servidor y de la DB                         |
 | GET    | `/products`            | Listar productos (opcional: `?category=Vientos`)       |
-| GET    | `/products/categories` | Categorías que tienen productos                        |
+| GET    | `/products/categories` | Categorías con productos (`?withCount=true`: con cantidad) |
 | GET    | `/products/:id`        | Obtener un producto                                    |
 | POST   | `/products`            | Crear producto                                         |
 | PUT    | `/products/:id`        | Reemplazar producto (todos los campos)                 |
@@ -51,6 +51,8 @@ Endpoints (`/api`):
 | DELETE | `/coupons/:id`         | Eliminar cupón                                         |
 
 Respuestas: `{ ok: true, data }` si sale bien, `{ ok: false, message, details? }` si hay error.
+
+Paginación: `GET /products` y `GET /coupons` aceptan `?page=1&limit=10` (`limit` máximo 50). Si se manda alguno de los dos, la respuesta suma `pagination: { page, limit, total, totalPages }`; sin ellos se devuelve la lista completa.
 
 Producto: `name`, `category`, `price`, `stock`, `image` y `description` (opcional). Las categorías válidas están en [`backend/src/constants/categories.js`](backend/src/constants/categories.js).
 

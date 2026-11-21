@@ -1,0 +1,144 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: opacity 0.2s ease;
+}
+
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.itemEditing {
+  border-color: var(--acento-principal);
+  border-left-color: var(--acento-principal);
+  background: rgba(217, 130, 43, 0.08);
+}
+
+.thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: var(--detalle);
+}
+
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  color: rgba(26, 25, 24, 0.62);
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 8px 14px;
+  border-radius: 4px;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.editButton {
+  border: 1px solid var(--fondo-oscuro);
+  color: var(--fondo-oscuro);
+}
+
+.editButton:hover:not(:disabled) {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+.deleteButton {
+  border: 1px solid var(--color-secundario);
+  color: var(--color-secundario);
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: var(--color-secundario);
+  color: var(--texto-claro);
+}
+
+.editButton:disabled,
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.itemEditing .editButton:disabled {
+  border-color: var(--acento-principal);
+  background: var(--acento-principal);
+  color: var(--fondo-oscuro);
+  opacity: 1;
+}
+
+.statusMessage {
+  padding: 18px 0;
+  color: rgba(26, 25, 24, 0.68);
+}
+
+.error {
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .item {
+    flex-wrap: wrap;
+  }
+
+  .info {
+    flex-basis: calc(100% - 70px);
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .editButton,
+  .deleteButton {
+    flex: 1;
+  }
+}

@@ -12,6 +12,101 @@
     var(--shadow);
 }
 
+.productForm.editing {
+  border-top: 4px solid var(--acento-principal);
+  box-shadow:
+    12px 14px 0 rgba(217, 130, 43, 0.28),
+    var(--shadow);
+}
+
+.formTitle {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+  color: var(--texto-claro);
+  font-size: 1.3rem;
+}
+
+.editing .formTitle {
+  color: var(--acento-principal);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+select.input option {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+.currentImage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  color: rgba(248, 245, 238, 0.65);
+  font-size: 0.85rem;
+}
+
+.currentImage img {
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(234, 227, 210, 0.26);
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.actions .button {
+  flex: 1;
+  margin-top: 0;
+}
+
+.cancelButton {
+  padding: 13px 18px;
+  border: 1px solid rgba(234, 227, 210, 0.3);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--detalle);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cancelButton:hover:not(:disabled) {
+  border-color: var(--detalle);
+  background: rgba(234, 227, 210, 0.08);
+}
+
+.button:disabled,
+.cancelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .label {
   margin-top: 8px;
   color: var(--detalle);
@@ -80,7 +175,7 @@
     transform 0.2s ease;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   background: #e49a4d;
   transform: translateY(-2px);
 }
@@ -99,5 +194,9 @@
 
   .button {
     grid-column: auto;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
   }
 }

@@ -9,7 +9,7 @@ const category = yup
 const price = yup
   .number()
   .typeError("El precio debe ser un número")
-  .min(0, "El precio debe ser mayor o igual a 0")
+  .moreThan(0, "El precio debe ser mayor que 0")
 const stock = yup
   .number()
   .typeError("El stock debe ser un número")

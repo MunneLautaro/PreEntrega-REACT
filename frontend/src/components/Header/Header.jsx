@@ -25,7 +25,7 @@ export default function Header() {
           </li>
           <li className={styles.li}>
             <Link className={styles.navLink} to="/addProduct">
-              Alta de Productos
+              Gestión de Productos
             </Link>
           </li>
           <li className={styles.li}>

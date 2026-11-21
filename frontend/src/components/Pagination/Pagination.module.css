@@ -1,0 +1,95 @@
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.summary {
+  color: rgba(26, 25, 24, 0.62);
+  font-size: 0.85rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navButton,
+.pageButton {
+  min-width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--fondo-oscuro);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.pageButton {
+  padding: 0 8px;
+}
+
+.navButton:hover:not(:disabled),
+.pageButton:hover:not(:disabled) {
+  border-color: var(--acento-principal);
+  background: rgba(217, 130, 43, 0.1);
+}
+
+.current,
+.current:hover:not(:disabled) {
+  border-color: var(--fondo-oscuro);
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+.navButton:disabled,
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.current:disabled {
+  opacity: 1;
+}
+
+.navButton:focus-visible,
+.pageButton:focus-visible {
+  outline: 2px solid var(--acento-principal);
+  outline-offset: 2px;
+}
+
+.gap {
+  padding: 0 4px;
+  color: rgba(26, 25, 24, 0.5);
+}
+
+@media (max-width: 560px) {
+  .controls {
+    gap: 6px;
+  }
+
+  .navButton {
+    padding: 0 10px;
+    font-size: 0.85rem;
+  }
+}

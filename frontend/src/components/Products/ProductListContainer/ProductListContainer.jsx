@@ -1,85 +1,136 @@
-import ProductCardList from "../ProductCardList/ProductCardList"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { usePaginatedList } from "../../../hooks/usePaginatedList"
+import {
+  getCategoryCounts,
+  getProductsPage,
+} from "../../../services/productService"
+import Pagination from "../../Pagination/Pagination"
 import CategoryFilter from "../CategoryFilter/CategoryFilter"
+import ProductCardList from "../ProductCardList/ProductCardList"
 import styles from "./ProductListContainer.module.css"
-import { useState, useEffect, useMemo } from "react"
-import { getProducts } from "../../../services/productService"
 
 const ALL = "Todas"
+const PAGE_SIZE = 12
+
+const parsePage = (value) => {
+  const page = Number(value)
+  return Number.isInteger(page) && page >= 1 ? page : 1
+}
 
 function ProductListContainer() {
-  const [products, setProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState(ALL)
+  const sectionRef = useRef(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [categoryCounts, setCategoryCounts] = useState([])
+
+  const selectedCategory = searchParams.get("categoria") ?? ALL
+  const page = parsePage(searchParams.get("pagina"))
+  const category = selectedCategory === ALL ? undefined : selectedCategory
+
+  const updateParams = useCallback(
+    (changes) => {
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev)
+        for (const [key, value] of Object.entries(changes)) {
+          if (value === null) next.delete(key)
+          else next.set(key, value)
+        }
+        return next
+      })
+    },
+    [setSearchParams],
+  )
+
+  const setPage = useCallback(
+    (newPage) => updateParams({ pagina: newPage > 1 ? newPage : null }),
+    [updateParams],
+  )
+
+  const fetchPage = useCallback(
+    (pageToFetch, limit) => getProductsPage(pageToFetch, limit, { category }),
+    [category],
+  )
+
+  const {
+    items: products,
+    pagination,
+    isLoading,
+    error,
+  } = usePaginatedList(fetchPage, PAGE_SIZE, { page, onPageChange: setPage })
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsLoading(true)
-        setError(null)
-        setProducts(await getProducts())
-      } catch (error) {
-        console.error("Error fetching products:", error)
-        setError("No pudimos cargar los productos. Probá de nuevo en un rato.")
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchProducts()
+    getCategoryCounts()
+      .then(setCategoryCounts)
+      .catch((error) => console.error("Error al cargar las categorías:", error))
   }, [])
 
-  // Cantidad de productos por categoría, para armar los botones del filtro
-  const categories = useMemo(() => {
-    const counts = {}
-    for (const product of products) {
-      counts[product.category] = (counts[product.category] ?? 0) + 1
-    }
-    return [
-      { name: ALL, count: products.length },
-      ...Object.keys(counts)
-        .sort((a, b) => a.localeCompare(b))
-        .map((name) => ({ name, count: counts[name] })),
-    ]
-  }, [products])
+  const handleCategoryChange = (name) => {
+    updateParams({ categoria: name === ALL ? null : name, pagina: null })
+  }
 
-  const visibleProducts =
-    selectedCategory === ALL
-      ? products
-      : products.filter((product) => product.category === selectedCategory)
+  const handlePageChange = (newPage) => {
+    setPage(newPage)
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
-  if (isLoading) {
+  const categories = [
+    {
+      name: ALL,
+      count: categoryCounts.reduce((total, { count }) => total + count, 0),
+    },
+    ...categoryCounts,
+  ]
+
+  if (error) {
+    return (
+      <p className={`${styles.statusMessage} ${styles.error}`}>
+        No pudimos cargar los productos. Probá de nuevo en un rato.
+      </p>
+    )
+  }
+
+  if (isLoading && products.length === 0) {
     return <p className={styles.statusMessage}>Cargando productos...</p>
   }
 
-  if (error) {
-    return <p className={`${styles.statusMessage} ${styles.error}`}>{error}</p>
-  }
+  const total = pagination?.total ?? 0
 
   return (
-    <section className={styles.section}>
+    <section ref={sectionRef} className={styles.section}>
       <header className={styles.header}>
         <p className={styles.eyebrow}>Catálogo</p>
         <h1 className={styles.title}>Nuestros instrumentos</h1>
         <p className={styles.subtitle}>
-          {visibleProducts.length}{" "}
-          {visibleProducts.length === 1 ? "producto" : "productos"}
-          {selectedCategory !== ALL && ` en ${selectedCategory}`}
+          {total} {total === 1 ? "producto" : "productos"}
+          {category && ` en ${category}`}
         </p>
       </header>
 
-      {products.length > 0 && (
+      {categoryCounts.length > 0 && (
         <CategoryFilter
           categories={categories}
           selected={selectedCategory}
-          onSelect={setSelectedCategory}
+          onSelect={handleCategoryChange}
         />
       )}
 
-      {visibleProducts.length > 0 ? (
-        <ProductCardList products={visibleProducts} />
+      {products.length > 0 ? (
+        <div
+          className={`${styles.results} ${isLoading ? styles.loading : ""}`}
+          aria-busy={isLoading}
+        >
+          <ProductCardList products={products} />
+        </div>
       ) : (
         <p className={styles.statusMessage}>No hay productos para mostrar.</p>
       )}
+
+      <Pagination
+        pagination={pagination}
+        onPageChange={handlePageChange}
+        disabled={isLoading}
+        itemLabel="productos"
+      />
     </section>
   )
 }

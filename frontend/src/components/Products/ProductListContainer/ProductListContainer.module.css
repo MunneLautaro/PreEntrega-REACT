@@ -5,6 +5,17 @@
   width: min(100%, 1200px);
   margin: 0 auto;
   padding: clamp(1.5rem, 4vw, 3rem) 0 2rem;
+  scroll-margin-top: 16px;
+}
+
+.results {
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .header {

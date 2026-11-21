@@ -126,16 +126,20 @@
   cursor: not-allowed;
 }
 
-/* Lista de cupones */
-.listWrapper {
-  width: min(100%, 720px);
-  margin-top: 18px;
+.tabsWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  scroll-margin-top: 24px;
 }
 
-.listTitle {
-  margin-bottom: 12px;
-  color: var(--fondo-oscuro);
-  font-size: 1.3rem;
+.panel {
+  width: min(100%, 720px);
+  outline: none;
+}
+
+.panel .form {
+  width: 100%;
 }
 
 .list {
@@ -145,6 +149,12 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  transition: opacity 0.2s ease;
+}
+
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .item {

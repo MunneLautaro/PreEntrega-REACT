@@ -1,6 +1,7 @@
-import { request } from "./api"
+import { request, requestPage } from "./api"
 
-export const getCoupons = () => request("/coupons")
+export const getCouponsPage = (page, limit) =>
+  requestPage("/coupons", { page, limit })
 
 export const createCoupon = (coupon) =>
   request("/coupons", { method: "POST", body: coupon })

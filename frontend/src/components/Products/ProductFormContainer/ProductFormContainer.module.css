@@ -37,3 +37,20 @@
   margin-top: 10px;
   color: rgba(26, 25, 24, 0.68);
 }
+
+.tabsWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  scroll-margin-top: 24px;
+}
+
+.panel {
+  width: min(100%, 720px);
+  outline: none;
+}
+
+.formPanel {
+  display: flex;
+  justify-content: center;
+}

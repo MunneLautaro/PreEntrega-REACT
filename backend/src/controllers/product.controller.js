@@ -1,14 +1,28 @@
 import * as productService from "../services/product.service.js"
 
 export const getProducts = async (req, res) => {
-  const { category } = req.query
-  const products = await productService.getAll({
-    category: typeof category === "string" ? category : undefined,
-  })
+  const category =
+    typeof req.query.category === "string" ? req.query.category : undefined
+
+  if (req.pagination) {
+    const { items, pagination } = await productService.getPage({
+      category,
+      ...req.pagination,
+    })
+    return res.json({ ok: true, data: items, pagination })
+  }
+
+  const products = await productService.getAll({ category })
   res.json({ ok: true, data: products })
 }
 
-export const getCategories = async (_req, res) => {
+export const getCategories = async (req, res) => {
+  if (req.query.withCount === "true") {
+    const categories = await productService.getCategoryCounts()
+    categories.sort((a, b) => a.name.localeCompare(b.name))
+    return res.json({ ok: true, data: categories })
+  }
+
   const categories = await productService.getCategories()
   res.json({ ok: true, data: categories.sort() })
 }

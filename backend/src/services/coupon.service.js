@@ -1,7 +1,13 @@
 import { Coupon } from "../models/coupon.model.js"
 import { HttpError } from "../utils/HttpError.js"
+import { paginate } from "../utils/paginate.js"
 
-export const getAll = () => Coupon.find().sort({ createdAt: -1, _id: -1 })
+const SORT = { createdAt: -1, _id: -1 }
+
+export const getAll = () => Coupon.find().sort(SORT)
+
+export const getPage = ({ page, limit }) =>
+  paginate(Coupon, { sort: SORT, page, limit })
 
 export const create = async (data) => {
   if (await Coupon.exists({ codigo: data.codigo })) {
